@@ -33,7 +33,7 @@ for sentence in sentences:
     #print(sentence)
     #sentence_length = 0
     for word, freq in freq_table.items():
-        if word in sentence.lower():
+        if word_value in sentence.lower():
             if sentence in sentence_value:
                 sentence_value[sentence] += freq
                 #sentence_length += 1
