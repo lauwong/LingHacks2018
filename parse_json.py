@@ -3,5 +3,7 @@ from pprint import pprint
 
 data = json.load(open("train-v1.1.json"))
 
-pprint(data["data"][0]["title"])
-pprint(data["data"][0]["paragraphs"][0]["context"])
+index = int(input("Data set index: "))
+
+pprint(data["data"][index]["title"])
+pprint(data["data"][index]["paragraphs"][0]["context"])
