@@ -1,8 +1,10 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+// var prompt = require('prompt');
+//
+
 var natural = require('natural');
 
-var summarize = function(text) {
-
+function summarize(text) {
   stemmer = natural.PorterStemmer;
   stemmer.attach();
 
@@ -37,15 +39,18 @@ var summarize = function(text) {
   //console.log(keys.length);
 
   for(var i = 0; i < sentences.length; i++) {
+    var sentenceLength = 0;
     for(var pair = 0; pair < keys.length; pair++) {
       if(sentences[i].toLowerCase().includes(keys[pair])) {
         if(sentences[i] in sentenceValues) {
           sentenceValues[sentences[i]] += Object.values(freq_table)[pair];
+          sentenceLength++;
         } else {
           sentenceValues[sentences[i]] = Object.values(freq_table)[pair];
         }
       }
     }
+    sentenceValues[sentences[i]] = sentenceValues[sentences[i]]/sentenceLength;
   }
   //console.log(freq_table);
 
@@ -65,15 +70,25 @@ var summarize = function(text) {
 
   var summary = '';
   for(var i = 0; i < sentences.length; i++) {
-    if(sentences[i] in sentenceValues && sentenceValues[sentences[i]] > (1.25 * average)) {
+    if(sentences[i] in sentenceValues && sentenceValues[sentences[i]] > (1.2 * average)) {
       summary += " " + sentences[i];
     }
   }
 
+  console.log("-----------Summary----------\n" + summary);
   return(summary);
 }
 
-module.exports = summarize;
+// var bundler = browserify(opts);
+// bundler.exclude('wordnet-db');
+// bundler.exclude('lapack');
+
+// prompt.start();
+// prompt.get('paragraph', function(err, result) {
+//   summarize(result.paragraph);
+// });
+
+//summarize(paragraph)
 
 // console.log(summarize("Architecturally, the school has a Catholic character. Atop the Main Building's gold dome is a golden statue of the Virgin Mary. Immediately in front of the Main Building and facing it, is a copper statue of Christ with arms upraised with the legend \"Venite Ad Me Omnes\". Next to the Main Building is the Basilica of the Sacred Heart. Immediately behind the basilica is the Grotto, a Marian place of prayer and reflection. It is a replica of the grotto at Lourdes, France where the Virgin Mary reputedly appeared to Saint Bernadette Soubirous in 1858. At the end of the main drive (and in a direct line that connects through 3 statues and the Gold Dome), is a simple, modern stone statue of Mary."));
 
@@ -210,7 +225,7 @@ BayesClassifier.prototype.probabilityOfClass = probabilityOfClass;
 BayesClassifier.restore = restore;
 
 module.exports = BayesClassifier;
-},{"./classifier":3,"util":138}],3:[function(require,module,exports){
+},{"./classifier":3,"util":137}],3:[function(require,module,exports){
 /*
 Copyright (c) 2011, Chris Umbel
 
@@ -460,7 +475,7 @@ LogisticRegressionClassifier.restore = restore;
 
 module.exports = LogisticRegressionClassifier;
 
-},{"./classifier":3,"sylvester":118,"util":138}],5:[function(require,module,exports){
+},{"./classifier":3,"sylvester":118,"util":137}],5:[function(require,module,exports){
 /*
 Copyright (c) 2011, Chris Umbel
 
@@ -761,7 +776,7 @@ exports.getRoot = function getRoot (file) {
 }
 
 }).call(this,require('_process'),"/node_modules/bindings/bindings.js")
-},{"_process":135,"fs":128,"path":134}],8:[function(require,module,exports){
+},{"_process":134,"fs":127,"path":133}],8:[function(require,module,exports){
 /*
 Copyright (c) 2011, Rob Ellis, Chris Umbel
 
@@ -1004,7 +1019,7 @@ Brill_POS_Tagger.prototype.applyRules = function(taggedSentence) {
 
 module.exports = Brill_POS_Tagger;
 
-},{"./TF_Parser":18,"fs":128}],10:[function(require,module,exports){
+},{"./TF_Parser":18,"fs":127}],10:[function(require,module,exports){
 /*
   Brill's POS Testing class
   Copyright (C) 2017 Hugo W.L. ter Doest
@@ -1808,7 +1823,7 @@ Lexicon.prototype.setDefaultCategories = function(category, categoryCapitalised)
 
 module.exports = Lexicon;
 
-},{"fs":128}],14:[function(require,module,exports){
+},{"fs":127}],14:[function(require,module,exports){
 /*
   Predicates for the Brill tagger
   Copyright (C) 2017 Hugo W.L. ter Doest
@@ -1947,7 +1962,7 @@ RuleSet.prototype.prettyPrint = function() {
 
 module.exports = RuleSet;
 
-},{"./TF_Parser":18,"fs":128}],16:[function(require,module,exports){
+},{"./TF_Parser":18,"fs":127}],16:[function(require,module,exports){
 /*
   Rule Template class for deriving transformation rules.
   Copyright (C) 2017 Hugo W.L. ter Doest
@@ -3651,7 +3666,7 @@ BayesClassifier.load = load;
 
 module.exports = BayesClassifier;
 
-},{"./classifier":21,"apparatus":6,"util":138}],21:[function(require,module,exports){
+},{"./classifier":21,"apparatus":6,"util":137}],21:[function(require,module,exports){
 /*
 Copyright (c) 2011, Chris Umbel
 
@@ -4112,7 +4127,7 @@ Classifier.load = load;
 
 module.exports = Classifier;
 
-},{"../stemmers/porter_stemmer":54,"events":131,"fs":128,"os":133,"util":138,"webworker-threads":126}],22:[function(require,module,exports){
+},{"../stemmers/porter_stemmer":54,"events":130,"fs":127,"os":132,"util":137,"webworker-threads":126}],22:[function(require,module,exports){
 /*
 Copyright (c) 2011, Chris Umbel
 
@@ -4178,7 +4193,7 @@ LogisticRegressionClassifier.load = load;
 
 module.exports = LogisticRegressionClassifier;
 
-},{"./classifier":21,"apparatus":6,"util":138}],23:[function(require,module,exports){
+},{"./classifier":21,"apparatus":6,"util":137}],23:[function(require,module,exports){
 /*
 Copyright (c) 2011, John Crepezzi, Chris Umbel
 
@@ -5018,7 +5033,7 @@ util.inherits(NounInflector, SingularPluralInflector);
 
 module.exports = NounInflector;
 
-},{"../form_set":28,"../singular_plural_inflector":33,"util":138}],30:[function(require,module,exports){
+},{"../form_set":28,"../singular_plural_inflector":33,"util":137}],30:[function(require,module,exports){
 /*
  Copyright (c) 2012, Guillaume Marty
 
@@ -5155,7 +5170,7 @@ util.inherits(NounInflector, SingularPluralInflector);
 
 module.exports = NounInflector;
 
-},{"../form_set":28,"../singular_plural_inflector":33,"util":138}],31:[function(require,module,exports){
+},{"../form_set":28,"../singular_plural_inflector":33,"util":137}],31:[function(require,module,exports){
 /*
 Copyright (c) 2011, Chris Umbel
 
@@ -5266,7 +5281,7 @@ util.inherits(NounInflector, SingularPluralInflector);
 
 module.exports = NounInflector;
 
-},{"./form_set":28,"./singular_plural_inflector":33,"util":138}],32:[function(require,module,exports){
+},{"./form_set":28,"./singular_plural_inflector":33,"util":137}],32:[function(require,module,exports){
 /*
 Copyright (c) 2011, Chris Umbel
 
@@ -5343,7 +5358,7 @@ util.inherits(VerbInflector, SingularPluralInflector);
 
 module.exports = VerbInflector;
 
-},{"./form_set":28,"./singular_plural_inflector":33,"util":138}],33:[function(require,module,exports){
+},{"./form_set":28,"./singular_plural_inflector":33,"util":137}],33:[function(require,module,exports){
 /*
 Copyright (c) 2011, Chris Umbel
 
@@ -8885,7 +8900,7 @@ rules.push(pr.DisambiguatorPrefixRule42);
 
 PrefixRules.rules = rules;
 }).call(this,"/node_modules/natural/lib/natural/stemmers/indonesian")
-},{"./removal":49,"fs":128}],49:[function(require,module,exports){
+},{"./removal":49,"fs":127}],49:[function(require,module,exports){
 /*
 Copyright (c) 2017, Alif Bhaskoro, Andy Librian, R. Kukuh (Reimplemented from https://github.com/sastrawi/sastrawi)
 
@@ -9245,7 +9260,7 @@ stemmer.isPlural = isPlural;
 stemmer.dictionary = dictionary;
 stemmer.a = suffix_rules[0];
 }).call(this,"/node_modules/natural/lib/natural/stemmers/indonesian")
-},{"./base_stemmer_id":47,"./prefix_rules":48,"./suffix_rules":51,"fs":128}],51:[function(require,module,exports){
+},{"./base_stemmer_id":47,"./prefix_rules":48,"./suffix_rules":51,"fs":127}],51:[function(require,module,exports){
 /*
 Copyright (c) 2017, Alif Bhaskoro, Andy Librian, R. Kukuh (Reimplemented from https://github.com/sastrawi/sastrawi)
 
@@ -13123,7 +13138,7 @@ TfIdf.prototype.setTokenizer = function(t) {
 };
 
 }).call(this,require("buffer").Buffer)
-},{"../tokenizers/regexp_tokenizer":88,"../util/stopwords":100,"buffer":130,"fs":128,"underscore":125}],76:[function(require,module,exports){
+},{"../tokenizers/regexp_tokenizer":88,"../util/stopwords":100,"buffer":129,"fs":127,"underscore":125}],76:[function(require,module,exports){
 /*
 Copyright (c) 2011, Chris Umbel
 
@@ -13161,7 +13176,7 @@ AggressiveTokenizer.prototype.tokenize = function(text) {
     return this.trim(text.split(/\W+/));
 };
 
-},{"./tokenizer":90,"util":138}],77:[function(require,module,exports){
+},{"./tokenizer":90,"util":137}],77:[function(require,module,exports){
 /*
 Copyright (c) 2011, Chris Umbel,David Przybilla
 
@@ -13199,7 +13214,7 @@ AggressiveTokenizer.prototype.tokenize = function(text) {
     return this.trim(text.split(/[^a-zA-Zá-úÁ-ÚñÑüÜ]+/));
 };
 
-},{"./tokenizer":90,"util":138}],78:[function(require,module,exports){
+},{"./tokenizer":90,"util":137}],78:[function(require,module,exports){
 /*
 Copyright (c) 2011, Chris Umbel
 Farsi Aggressive Tokenizer by Fardin Koochaki <me@fardinak.com>
@@ -13249,7 +13264,7 @@ AggressiveTokenizer.prototype.tokenize = function(text) {
     return this.clearEmptyString(text.split(/\s+/));
 };
 
-},{"./tokenizer":90,"util":138}],79:[function(require,module,exports){
+},{"./tokenizer":90,"util":137}],79:[function(require,module,exports){
 /*
 Copyright (c) 2011, Chris Umbel
 
@@ -13287,7 +13302,7 @@ AggressiveTokenizer.prototype.tokenize = function(text) {
     return this.trim(text.split(/[^a-z0-9äâàéèëêïîöôùüûœç]+/i));
 };
 
-},{"./tokenizer":90,"util":138}],80:[function(require,module,exports){
+},{"./tokenizer":90,"util":137}],80:[function(require,module,exports){
 /*
 Copyright (c) 2017, Alif Bhaskoro, Andy Librian, R. Kukuh (Reimplemented from https://github.com/sastrawi/sastrawi)
 
@@ -13333,7 +13348,7 @@ AggressiveTokenizer.prototype.tokenize = function(text) {
     return this.trim(text.split(' '));
 };
 
-},{"./tokenizer":90,"util":138}],81:[function(require,module,exports){
+},{"./tokenizer":90,"util":137}],81:[function(require,module,exports){
 /*
 Copyright (c) 2011, Chris Umbel,David Przybilla
 
@@ -13371,7 +13386,7 @@ AggressiveTokenizer.prototype.tokenize = function(text) {
     return this.trim(text.split(/\W+/));
 };
 
-},{"./tokenizer":90,"util":138}],82:[function(require,module,exports){
+},{"./tokenizer":90,"util":137}],82:[function(require,module,exports){
 /*
 Copyright (c) 2011, Chris Umbel, Martijn de Boer
 
@@ -13409,7 +13424,7 @@ AggressiveTokenizer.prototype.tokenize = function(text) {
     return this.trim(text.split(/[^a-zA-Z0-9_']+/));
 };
 
-},{"./tokenizer":90,"util":138}],83:[function(require,module,exports){
+},{"./tokenizer":90,"util":137}],83:[function(require,module,exports){
 /*
 Copyright (c) 2014, Kristoffer Brabrand
 
@@ -13450,7 +13465,7 @@ AggressiveTokenizer.prototype.tokenize = function(text) {
     return this.trim(text.split(/[^A-Za-z0-9_æøåÆØÅäÄöÖüÜ]+/));
 };
 
-},{"../normalizers/normalizer_no":38,"./tokenizer":90,"util":138}],84:[function(require,module,exports){
+},{"../normalizers/normalizer_no":38,"./tokenizer":90,"util":137}],84:[function(require,module,exports){
 /*
 Copyright (c) 2013, Paweł Łaskarzewski
 
@@ -13497,7 +13512,7 @@ AggressiveTokenizer.prototype.tokenize = function(text) {
     return this.withoutEmpty(this.clearText(text).split(' '));
 };
 
-},{"./tokenizer":90,"util":138}],85:[function(require,module,exports){
+},{"./tokenizer":90,"util":137}],85:[function(require,module,exports){
 /*
 Copyright (c) 2011, Chris Umbel,David Przybilla
 
@@ -13539,7 +13554,7 @@ AggressiveTokenizer.prototype.tokenize = function(text) {
     return this.withoutEmpty(this.trim(text.split(/[^a-zA-Zà-úÀ-Ú]/)));
 };
 
-},{"./tokenizer":90,"util":138}],86:[function(require,module,exports){
+},{"./tokenizer":90,"util":137}],86:[function(require,module,exports){
 /*
 Copyright (c) 2011, Chris Umbel
 
@@ -13586,7 +13601,7 @@ AggressiveTokenizer.prototype.tokenize = function(text) {
     return this.withoutEmpty(this.clearText(text).split(' '));
 };
 
-},{"./tokenizer":90,"util":138}],87:[function(require,module,exports){
+},{"./tokenizer":90,"util":137}],87:[function(require,module,exports){
 /*
 Copyright (c) 2017, Dogan Yazar
 
@@ -13628,7 +13643,7 @@ AggressiveTokenizer.prototype.tokenize = function(text) {
     return this.trim(text.split(/[^A-Za-z0-9_åÅäÄöÖüÜ]+/));
 };
 
-},{"../normalizers/normalizer_sv":39,"./tokenizer":90,"util":138}],88:[function(require,module,exports){
+},{"../normalizers/normalizer_sv":39,"./tokenizer":90,"util":137}],88:[function(require,module,exports){
 /*
 Copyright (c) 2011, Rob Ellis, Chris Umbel
 
@@ -13716,7 +13731,7 @@ var WordPunctTokenizer = function(options) {
 util.inherits(WordPunctTokenizer, RegexpTokenizer);
 exports.WordPunctTokenizer = WordPunctTokenizer;
 
-},{"./tokenizer":90,"underscore":125,"util":138}],89:[function(require,module,exports){
+},{"./tokenizer":90,"underscore":125,"util":137}],89:[function(require,module,exports){
 /*
 Copyright (c) 2011, Chris Umbel
 
@@ -13759,7 +13774,7 @@ SentenceTokenizer.prototype.tokenize = function(text) {
 
 module.exports = SentenceTokenizer;
 
-},{"./tokenizer":90,"util":138}],90:[function(require,module,exports){
+},{"./tokenizer":90,"util":137}],90:[function(require,module,exports){
 /*
 Copyright (c) 2011, Chris Umbel
 
@@ -13872,7 +13887,7 @@ CaseTokenizer.prototype.tokenize = function(text, preserveApostrophe) {
 
 module.exports = CaseTokenizer;
 
-},{"./tokenizer":90,"util":138}],92:[function(require,module,exports){
+},{"./tokenizer":90,"util":137}],92:[function(require,module,exports){
 // Original copyright:
 /*
  Copyright (c) 2008, Taku Kudo
@@ -14151,7 +14166,7 @@ TokenizerJa.prototype.tokenize = function(text) {
 
 module.exports = TokenizerJa;
 
-},{"../normalizers/normalizer_ja":37,"./tokenizer":90,"util":138}],93:[function(require,module,exports){
+},{"../normalizers/normalizer_ja":37,"./tokenizer":90,"util":137}],93:[function(require,module,exports){
 /*
 Copyright (c) 2011, Rob Ellis, Chris Umbel
 
@@ -14227,7 +14242,7 @@ TreebankWordTokenizer.prototype.tokenize = function(text) {
 
 module.exports = TreebankWordTokenizer;
 
-},{"./tokenizer":90,"underscore":125,"util":138}],94:[function(require,module,exports){
+},{"./tokenizer":90,"underscore":125,"util":137}],94:[function(require,module,exports){
 /*
  Copyright (c) 2012, Guillaume Marty
 
@@ -15210,7 +15225,7 @@ EdgeWeightedDigraph.prototype.toString = function() {
 
 module.exports = EdgeWeightedDigraph;
 
-},{"./bag":96,"util":138}],98:[function(require,module,exports){
+},{"./bag":96,"util":137}],98:[function(require,module,exports){
 /*
  Copyright (c) 2014, Lee Wenzhu
 
@@ -16641,7 +16656,7 @@ DataFile.prototype.get = get;
 module.exports = DataFile;
 
 }).call(this,require("buffer").Buffer)
-},{"./wordnet_file":117,"buffer":130,"fs":128,"util":138}],115:[function(require,module,exports){
+},{"./wordnet_file":117,"buffer":129,"fs":127,"util":137}],115:[function(require,module,exports){
 (function (Buffer){
 /*
 Copyright (c) 2011, Chris Umbel
@@ -16785,7 +16800,7 @@ IndexFile.prototype._findAt = findAt;
 module.exports = IndexFile;
 
 }).call(this,require("buffer").Buffer)
-},{"./wordnet_file":117,"buffer":130,"fs":128,"util":138}],116:[function(require,module,exports){
+},{"./wordnet_file":117,"buffer":129,"fs":127,"util":137}],116:[function(require,module,exports){
 /*
 Copyright (c) 2011, Chris Umbel
 
@@ -17029,7 +17044,7 @@ WordNetFile.appendLineChar = appendLineChar;
 module.exports = WordNetFile;
 
 }).call(this,require("buffer").Buffer)
-},{"buffer":130,"fs":128,"path":134,"util":138}],118:[function(require,module,exports){
+},{"buffer":129,"fs":127,"path":133,"util":137}],118:[function(require,module,exports){
 (function (global){
 // Copyright (c) 2011, Chris Umbel
 
@@ -18444,7 +18459,7 @@ Matrix.Ones = function(n, m) {
 
 module.exports = Matrix;
 
-},{"./sylvester":123,"./vector":124,"fs":128,"lapack":128}],122:[function(require,module,exports){
+},{"./sylvester":123,"./vector":124,"fs":127,"lapack":127}],122:[function(require,module,exports){
 // Copyright (c) 2011, Chris Umbel, James Coglan
 // Plane class - depends on Vector. Some methods require Matrix and Line.
 var Vector = require('./vector');
@@ -20733,19 +20748,8 @@ var WebWorkerThreads = require('bindings')('WebWorkerThreads');
 module.exports = WebWorkerThreads;
 
 },{"bindings":7}],127:[function(require,module,exports){
-(function (__dirname){
 
-exports.version = '3.1';	// this is the WordNet DB version
-exports.path = require('path').join(__dirname, 'dict');
-try{
-exports.files = require('fs').readdirSync(exports.path);
-} catch(e) {
-  console.log(e.message);
-}
-}).call(this,"/node_modules/wordnet-db")
-},{"fs":128,"path":134}],128:[function(require,module,exports){
-
-},{}],129:[function(require,module,exports){
+},{}],128:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -20863,7 +20867,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],130:[function(require,module,exports){
+},{}],129:[function(require,module,exports){
 /*!
  * The buffer module from node.js, for the browser.
  *
@@ -22601,7 +22605,7 @@ function numberIsNaN (obj) {
   return obj !== obj // eslint-disable-line no-self-compare
 }
 
-},{"base64-js":129,"ieee754":132}],131:[function(require,module,exports){
+},{"base64-js":128,"ieee754":131}],130:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -23122,7 +23126,7 @@ function functionBindPolyfill(context) {
   };
 }
 
-},{}],132:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = (nBytes * 8) - mLen - 1
@@ -23208,7 +23212,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],133:[function(require,module,exports){
+},{}],132:[function(require,module,exports){
 exports.endianness = function () { return 'LE' };
 
 exports.hostname = function () {
@@ -23259,7 +23263,7 @@ exports.homedir = function () {
 	return '/'
 };
 
-},{}],134:[function(require,module,exports){
+},{}],133:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -23487,7 +23491,7 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 }).call(this,require('_process'))
-},{"_process":135}],135:[function(require,module,exports){
+},{"_process":134}],134:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -23673,7 +23677,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],136:[function(require,module,exports){
+},{}],135:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -23698,14 +23702,14 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],137:[function(require,module,exports){
+},{}],136:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],138:[function(require,module,exports){
+},{}],137:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -24295,4 +24299,4 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":137,"_process":135,"inherits":136}]},{},[1]);
+},{"./support/isBuffer":136,"_process":134,"inherits":135}]},{},[1]);

@@ -1,7 +1,9 @@
-var prompt = require('prompt');
+// var prompt = require('prompt');
+//
+
+var natural = require('natural');
 
 function summarize(text) {
-  var natural = require('natural');
   stemmer = natural.PorterStemmer;
   stemmer.attach();
 
@@ -76,10 +78,14 @@ function summarize(text) {
   return(summary);
 }
 
-prompt.start();
-prompt.get('paragraph', function(err, result) {
-  summarize(result.paragraph);
-});
+// var bundler = browserify(opts);
+// bundler.exclude('wordnet-db');
+// bundler.exclude('lapack');
+
+// prompt.start();
+// prompt.get('paragraph', function(err, result) {
+//   summarize(result.paragraph);
+// });
 
 //summarize(paragraph)
 

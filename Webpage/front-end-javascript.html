@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Automatic Annotation</title>
+	</head>
+	<script src="bundle.js" type="text/javascript"></script>
+	<body>
+		<script type="text/javascript" src="javascript_summarizer.js"></script>
+		<h1>Automatic Annotation Tool</h1>
+
+		<textarea rows="6" cols="50" id="textarea" form="form" class=text></textarea>
+		<br>
+		<button id="summary" onClick="getSummary()">Annotate</button><br>
+		<p id='output'>Hello</p>
+		<script type-"text/javascript">
+			function getSummary() {
+				var text = document.getElementById('textarea');
+				var pOutput = summarize(text).toString();
+				document.getElementById('output') = pOutput;
+			}
+		</script>
+	</body>
+</html>
